@@ -1,0 +1,11 @@
+{
+  "name": "caster",
+  "description": "A simple multicast server & client",
+  "version": "0.1.0",
+  "author": {
+    "name": "Malte-Thorben Bruns",
+    "email": "skenqbx@googlemail.com"
+  },
+  "dependencies": {
+  }
+}
