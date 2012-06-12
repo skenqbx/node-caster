@@ -6,6 +6,7 @@
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
   },
-  "dependencies": {
+  "devDependencies": {
+    "jshint": "*"
   }
 }
