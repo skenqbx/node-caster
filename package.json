@@ -1,12 +1,16 @@
 {
   "name": "caster",
   "description": "A simple multicast server & client",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": {
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
   },
   "devDependencies": {
     "jshint": "*"
-  }
+  },
+  "engines": {
+    "node": "0.6.x"
+  },
+  "main": "index.js"
 }
