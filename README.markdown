@@ -1,6 +1,10 @@
 # node-caster
 _A simple multicast server & client_
 
+## install
+
+    npm install caster
+
 ## example
 
     var caster = require('caster').create({

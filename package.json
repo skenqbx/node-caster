@@ -1,10 +1,18 @@
 {
   "name": "caster",
   "description": "A simple multicast server & client",
-  "version": "0.0.1",
+  "keywords": ["multicast", "udp"],
+  "version": "0.0.2-dev",
   "author": {
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/skenqbx/node-caster/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skenqbx/node-caster.git"
   },
   "devDependencies": {
     "jshint": "*"
