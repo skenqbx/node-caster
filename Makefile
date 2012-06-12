@@ -7,3 +7,6 @@ all:
 
 jshint:
 	@node_modules/.bin/jshint lib/ index.js
+
+test:
+	@node test.js
