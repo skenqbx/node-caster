@@ -1,15 +1,17 @@
 # node-caster
-_A simple multicast server & client_
-
-    Stability: 1 Experimental
+_A collection of multicast servers_
 
 ## install
 
     npm install caster
 
-## examples
+## api
 
-### Caster - a multicast server
+### Caster - a basic multicast server
+
+    Stability: 2 Unstable
+
+#### example
 
     var caster = require('caster').create({
       multicast: '224.0.0.54',
@@ -31,7 +33,46 @@ _A simple multicast server & client_
       }
     });
 
+
+#### create(options)
+Create a new `Caster` object. `Caster` is an `EventEmitter`.
+
+**options**
+
+    { multicast: '224.0.0.42',
+      address: '0.0.0.0',
+      port: null,
+      loopback: true,
+      ttl: 64
+    }
+
+_Note:_ All nodes have to use the same multicast address & port to be able to communicate.
+
+#### caster.send(message, opt_callback)
+Send a message to other multicast nodes.
+
+`message` is a `Buffer`.
+`opt_callback` is an optional `function(err, bytes)`.
+
+#### caster.bind(opt_callback)
+Enable the multicast udp socket.
+
+`opt_callback` is an optional `function(err)`.
+
+#### Event: 'message'
+`function(message, remote)`
+
+`message` is a `Buffer`.
+`remote` is an object and contains information on the remote node.
+
+#### Event: 'error'
+`function(err)`
+
 ### Node - a network discovery server
+
+    Stability: 1 Experimental
+
+#### example
 
     var node = require('caster').createNode({
       multicast: '224.0.0.54',
@@ -59,60 +100,38 @@ _A simple multicast server & client_
       }
     });
 
-## api
+#### createNode(options)
+Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
-### create(options)
-Create a new `Caster` object. `Caster` is an `EventEmitter`.
-
-#### options
-
-    { multicast: '224.0.0.42',
-      address: '0.0.0.0',
-      port: null,
-      loopback: true,
-      ttl: 64
-    }
-
-#### caster.send(message, opt_callback)
-Send a message to other multicast nodes. `message` is a `Buffer`.
-
-#### caster.bind(opt_callback)
-Enable the multicast udp socket.
-
-#### Event: 'message'
-`function(message, remote)`
-
-`message` is a `Buffer`.
-`remote` is an object and contains information on the remote node.
-
-#### Event: 'error'
-`function(err)`
-
-### createNode(options)
-Create a new `Node` object. `Node` is an `EventEmitter`.
-
-#### options
+**options**
 
     { id: 'your_unique_node_id', // randomized if not set
-      heartbeat: 1000,
-      timeout: 2000,
-      expose: true,
+      heartbeat: 1000, // heartbeat interval in ms
+      timeout: 2000, // timeout until a remote node is declared down
+      expose: true, // when false, no heartbeats are send
       // and all options of Caster
       multicast: '224.0.0.42',
       address: '0.0.0.0',
-      port: null,
+      port: null, // randomized if not set
       loopback: true,
       ttl: 64
     }
 
 #### node.up(opt_callback)
+Fire up the node.
+
+`opt_callback` is an optional `function(err)`.
 
 #### node.down(opt_callback)
+Shut down the node.
+
+`opt_callback` is an optional `function()`.
 
 #### node.send(message, opt_callback)
 Send a message to other multicast nodes.
 
 `message` is a `String`, `Number` or `Object`.
+`opt_callback` is an optional `function(err, bytes)`.
 
 #### node.nodes
 An object with all currently seen nodes.
