@@ -28,13 +28,12 @@ var bindCount = 3;
 var msgCount = 9;
 var testMessage = new Buffer("Some bytes");
 var options = {
-  port: 43214,
-  loopback: true
+  port: 43214
 };
 
 var casterA, casterB, casterC;
 
-function onMessage(message) {
+function onMessage(message, rinfo) {
   if (message.toString() !== testMessage.toString()) {
     throw new Error('Received corrupt message');
   }
@@ -46,9 +45,13 @@ function onMessage(message) {
   }
 }
 
-casterA = createCaster(options, onMessage);
-casterB = createCaster(options, onMessage);
-casterC = createCaster(options, onMessage);
+casterA = createCaster(options);
+casterB = createCaster(options);
+casterC = createCaster(options);
+
+casterA.on('message', onMessage);
+casterB.on('message', onMessage);
+casterB.on('message', onMessage);
 
 function onBind(err) {
   if (err) {
