@@ -1,8 +1,8 @@
 {
   "name": "caster",
   "description": "A simple multicast server & client",
-  "keywords": ["multicast", "udp"],
-  "version": "0.0.2",
+  "keywords": ["multicast", "udp", "discover"],
+  "version": "0.0.3-dev",
   "author": {
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
