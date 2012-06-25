@@ -2,13 +2,14 @@
 # node-caster Makefile
 # @author malte.bruns@joocom.de (Malte-Thorben Bruns)
 #
-all:
-	@
+REPORTER ?= spec
+
+all: jshint test
 
 jshint:
 	@node_modules/.bin/jshint lib/ index.js
 
-test: test-unit
+test:
+	@node_modules/.bin/mocha --reporter $(REPORTER) test/*.js
 
-test-unit:
-	@node_modules/.bin/mocha test/*.js
+.PHONY: jshint test
