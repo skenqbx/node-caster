@@ -7,7 +7,7 @@ _A collection of multicast servers_
 
 ## api
 
-### Caster - a basic multicast server
+### Caster - a multicast server
 
     Stability: 2 Unstable
 
@@ -19,9 +19,22 @@ var caster = require('caster').create({
   port: 41234
 });
 
-caster.on('message', function(message, rinfo) {
-  console.log(message.toString(), rinfo);
+caster.on('message', function(message, remote) {
+  console.log(message.toString(), remote);
 });
+
+caster.use(
+    /* receive middleware */
+    function(message, remote, next) {
+      // do something with the incoming message
+      next(null, message);
+    },
+    /* transmit middleware */
+    function(message, next) {
+      // do something with the outgoing message
+      next(null, message);
+    }
+);
 
 caster.bind(function(err) {
   if (err) {
