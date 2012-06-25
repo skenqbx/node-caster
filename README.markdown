@@ -78,11 +78,13 @@ Send a message to other multicast nodes.
 `message` is a `Buffer`.
 
 `opt_callback` is an optional `function(err, bytes)`.
+A possible error is emitted when no callback is set.
 
 #### caster.bind(opt_callback)
 Enable the multicast udp socket.
 
 `opt_callback` is an optional `function(err)`.
+A possible error is emitted when no callback is set.
 
 #### caster.close(opt_callback)
 Close the socket and cleanup the caster.
@@ -156,6 +158,7 @@ Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 Fire up the node.
 
 `opt_callback` is an optional `function(err)`.
+A possible error is emitted when no callback is set.
 
 #### node.down(opt_callback)
 Shut down the node.
@@ -168,6 +171,7 @@ Send a message to other multicast nodes.
 `message` is a `String`, `Number` or `Object`.
 
 `opt_callback` is an optional `function(err, bytes)`.
+A possible error is emitted when no callback is set.
 
 #### node.nodes
 An object with all currently seen nodes.
