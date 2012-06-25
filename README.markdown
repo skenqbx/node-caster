@@ -43,6 +43,7 @@ caster.bind(function(err) {
     var message = new Buffer('Some bytes');
     caster.send(message, function(err, bytes) {
       console.log(err, bytes);
+      caster.close();
     });
   }
 });
@@ -82,6 +83,11 @@ Send a message to other multicast nodes.
 Enable the multicast udp socket.
 
 `opt_callback` is an optional `function(err)`.
+
+#### caster.close(opt_callback)
+Close the socket and cleanup the caster.
+
+`opt_callback` is an optional `function()`.
 
 #### Event: 'message'
 `function(message, remote)`
