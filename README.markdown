@@ -27,7 +27,7 @@ caster.bind(function(err) {
   if (err) {
     console.log(err);
   } else {
-    var message = new Buffer("Some bytes");
+    var message = new Buffer('Some bytes');
     caster.send(message, function(err, bytes) {
       console.log(err, bytes);
     });
