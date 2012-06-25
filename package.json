@@ -1,6 +1,6 @@
 {
   "name": "caster",
-  "description": "A simple multicast server & client",
+  "description": "A collection of multicast servers",
   "keywords": ["multicast", "udp", "service discovery"],
   "version": "0.0.4-dev",
   "author": {
@@ -15,10 +15,11 @@
     "url": "https://github.com/skenqbx/node-caster.git"
   },
   "devDependencies": {
-    "jshint": "*"
+    "jshint": "*",
+    "mocha": "*"
   },
   "engines": {
-    "node": "0.6.x"
+    "node": "0.6.x - 0.8.x"
   },
   "main": "index.js"
 }

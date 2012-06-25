@@ -8,5 +8,7 @@ all:
 jshint:
 	@node_modules/.bin/jshint lib/ index.js
 
-test:
-	@node test.js
+test: test-unit
+
+test-unit:
+	@node_modules/.bin/mocha test/*.js
