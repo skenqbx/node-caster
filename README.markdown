@@ -143,11 +143,21 @@ Send a message to other multicast nodes.
 #### node.nodes
 An object with all currently seen nodes.
 
+```javascript
+{ node857631295: {
+    id: 'node857631295',
+    address: '10.0.0.23',
+    lastSeen: 1340351517064
+  },
+  ...
+}
+```
+
 #### Event: 'message'
 `function(message, remote)`
 
 `message` is the received & parsed json object.
-`remote` is an object that contains information on the remote node.
+`remote` is the object stored in [node.nodes](#nodenodes).
 
 #### Event: 'error'
 `function(Error)`
@@ -157,7 +167,7 @@ Emitted when a remote node is _discovered_.
 
 `function(remote)`
 
-`remote` is an object that contains information on the remote node.
+`remote` is the object stored in [node.nodes](#nodenodes).
 
 #### Event: 'down'
 
@@ -165,4 +175,4 @@ Emitted when a remote node _disapeared_.
 
 `function(remote)`
 
-`remote` is an object that contains information on the remote node.
+`remote` is the object just removed from [node.nodes](#nodenodes).
