@@ -161,7 +161,7 @@ Emitted when a remote node is _discovered_.
 
 #### Event: 'down'
 
-Emitted when a remote node is _disapeared_.
+Emitted when a remote node _disapeared_.
 
 `function(remote)`
 

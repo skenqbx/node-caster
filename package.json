@@ -2,7 +2,7 @@
   "name": "caster",
   "description": "A collection of multicast servers",
   "keywords": ["multicast", "udp", "service discovery"],
-  "version": "0.0.5",
+  "version": "0.0.6-dev",
   "author": {
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
