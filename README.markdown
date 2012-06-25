@@ -95,7 +95,7 @@ Enable the multicast udp socket.
 
 ### Node - a network discovery server
 
-    Stability: 1 Experimental
+    Stability: 2 Unstable
 
 #### example
 
