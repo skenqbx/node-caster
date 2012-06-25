@@ -20,25 +20,23 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 describe('Caster', function() {
-  var createCaster = require('../lib').create;
+  var caster = require('../lib');
 
   var options = {
     port: 43214
   };
 
-  var socketA = createCaster(options);
-  var socketB = createCaster(options);
-  var socketC = createCaster(options);
+  var socketA = caster.create(options);
+  var socketB = caster.create(options);
+  var socketC = caster.create(options);
 
   describe('#bind()', function() {
     it('socket A', function(done) {
       socketA.bind(done);
     });
-
     it('socket B', function(done) {
       socketB.bind(done);
     });
-
     it('socket C', function(done) {
       socketC.bind(done);
     });
@@ -48,13 +46,35 @@ describe('Caster', function() {
     it('socket A', function(done) {
       socketA.send(new Buffer('test message'), done);
     });
-
     it('socket B', function(done) {
       socketB.send(new Buffer('test message'), done);
     });
-
     it('socket C', function(done) {
       socketC.send(new Buffer('test message'), done);
+    });
+
+    describe('#onMessage()', function() {
+      it('send 3x1 & receive 3x3', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send(new Buffer('test message'));
+        socketB.send(new Buffer('test message'));
+        socketC.send(new Buffer('test message'));
+      });
+      after(function() {
+        socketA.removeAllListeners('message');
+        socketB.removeAllListeners('message');
+        socketC.removeAllListeners('message');
+      });
     });
   });
 });
