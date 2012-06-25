@@ -87,7 +87,7 @@ Enable the multicast udp socket.
 A possible error is emitted when no callback is set.
 
 #### caster.close(opt_callback)
-Close the socket and cleanup the caster.
+Close the socket. Allows to `bind()` again with the same caster object.
 
 `opt_callback` is an optional `function()`.
 
