@@ -13,38 +13,41 @@ _A collection of multicast servers_
 
 #### example
 
-    var caster = require('caster').create({
-      multicast: '224.0.0.54',
-      port: 41234
-    });
+```javascript
+var caster = require('caster').create({
+  multicast: '224.0.0.54',
+  port: 41234
+});
 
-    caster.on('message', function(message, rinfo) {
-      console.log(message.toString(), rinfo);
-    });
+caster.on('message', function(message, rinfo) {
+  console.log(message.toString(), rinfo);
+});
 
-    caster.bind(function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        var message = new Buffer("Some bytes");
-        caster.send(message, function(err, bytes) {
-          console.log(err, bytes);
-        });
-      }
+caster.bind(function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    var message = new Buffer("Some bytes");
+    caster.send(message, function(err, bytes) {
+      console.log(err, bytes);
     });
-
+  }
+});
+```
 
 #### create(options)
 Create a new `Caster` object. `Caster` is an `EventEmitter`.
 
 **options**
 
-    { multicast: '224.0.0.42',
-      address: '0.0.0.0',
-      port: null,
-      loopback: true,
-      ttl: 64
-    }
+```javascript
+{ multicast: '224.0.0.42',
+  address: '0.0.0.0',
+  port: null,
+  loopback: true,
+  ttl: 64
+}
+```
 
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
@@ -74,48 +77,52 @@ Enable the multicast udp socket.
 
 #### example
 
-    var node = require('caster').createNode({
-      multicast: '224.0.0.54',
-      port: 41234
-    });
+```javascript
+var node = require('caster').createNode({
+  multicast: '224.0.0.54',
+  port: 41234
+});
 
-    node.on('up', function(remote) {
-      console.log('up:', remote.id);
-    });
+node.on('up', function(remote) {
+  console.log('up:', remote.id);
+});
 
-    node.on('down', function(remote) {
-      console.log('down:', remote.id);
-    });
+node.on('down', function(remote) {
+  console.log('down:', remote.id);
+});
 
-    node.on('message', function(message, remote) {
-      console.log(remote.id + ':', message);
-    });
+node.on('message', function(message, remote) {
+  console.log(remote.id + ':', message);
+});
 
-    node.up(function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('caster node running on ' +
-            node.multicast + ':' + node.port);
-      }
-    });
+node.up(function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('caster node running on ' +
+        node.multicast + ':' + node.port);
+  }
+});
+```
 
 #### createNode(options)
 Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
 **options**
 
-    { id: 'your_unique_node_id', // randomized if not set
-      heartbeat: 1000, // heartbeat interval in ms
-      timeout: 2000, // timeout until a remote node is declared down
-      expose: true, // when false, no heartbeats are send
-      // and all options of Caster
-      multicast: '224.0.0.42',
-      address: '0.0.0.0',
-      port: null, // randomized if not set
-      loopback: true,
-      ttl: 64
-    }
+```javascript
+{ id: 'your_unique_node_id', // randomized if not set
+  heartbeat: 1000, // heartbeat interval in ms
+  timeout: 2000, // timeout until a remote node is declared down
+  expose: true, // when false, no heartbeats are send
+  // and all options of Caster
+  multicast: '224.0.0.42',
+  address: '0.0.0.0',
+  port: null, // randomized if not set
+  loopback: true,
+  ttl: 64
+}
+```
 
 #### node.up(opt_callback)
 Fire up the node.
