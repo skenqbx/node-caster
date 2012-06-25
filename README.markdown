@@ -51,10 +51,18 @@ Create a new `Caster` object. `Caster` is an `EventEmitter`.
 
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
+#### caster.use(receive, transmit)
+Add receive and/or transmit middleware.
+
+`receive` is a `function(Buffer, Object.<string, *>, function(Error, Buffer))` or `null`.
+
+`transmit` is a `function(Buffer, function(Error, Buffer))` or `null`.
+
 #### caster.send(message, opt_callback)
 Send a message to other multicast nodes.
 
 `message` is a `Buffer`.
+
 `opt_callback` is an optional `function(err, bytes)`.
 
 #### caster.bind(opt_callback)
@@ -66,6 +74,7 @@ Enable the multicast udp socket.
 `function(message, remote)`
 
 `message` is a `Buffer`.
+
 `remote` is an object and contains information on the remote node.
 
 #### Event: 'error'
@@ -138,6 +147,7 @@ Shut down the node.
 Send a message to other multicast nodes.
 
 `message` is a `String`, `Number` or `Object`.
+
 `opt_callback` is an optional `function(err, bytes)`.
 
 #### node.nodes
@@ -157,6 +167,7 @@ An object with all currently seen nodes.
 `function(message, remote)`
 
 `message` is the received & parsed json object.
+
 `remote` is the object stored in [node.nodes](#nodenodes).
 
 #### Event: 'error'
@@ -170,7 +181,6 @@ Emitted when a remote node is _discovered_.
 `remote` is the object stored in [node.nodes](#nodenodes).
 
 #### Event: 'down'
-
 Emitted when a remote node _disapeared_.
 
 `function(remote)`
