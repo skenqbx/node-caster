@@ -54,7 +54,7 @@ describe('Caster', function() {
     });
 
     describe('#onMessage()', function() {
-      it('send 3x1 & receive 3x3', function(done) {
+      it('binary', function(done) {
         var count = 0;
 
         function add() {
@@ -74,6 +74,42 @@ describe('Caster', function() {
         socketA.removeAllListeners('message');
         socketB.removeAllListeners('message');
         socketC.removeAllListeners('message');
+      });
+
+      it('middleware.json', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        var middleware = caster.middleware.json();
+        socketA.use(middleware);
+        socketB.use(middleware);
+        socketC.use(middleware);
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send({hello: 'world'});
+        socketB.send({hello: 'world'});
+        socketC.send({hello: 'world'});
+      });
+
+      after(function() {
+        socketA.removeAllListeners('message');
+        socketA._middleware = {};
+        socketA._rx = [];
+        socketA._tx = [];
+        socketB.removeAllListeners('message');
+        socketB._middleware = {};
+        socketB._rx = [];
+        socketB._tx = [];
+        socketC.removeAllListeners('message');
+        socketC._middleware = {};
+        socketC._rx = [];
+        socketC._tx = [];
       });
     });
   });
