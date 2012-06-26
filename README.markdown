@@ -14,36 +14,26 @@ _A collection of multicast servers_
 #### example
 
 ```javascript
-var caster = require('caster').create({
+var caster = require('caster');
+
+var server = caster.create({
   multicast: '224.0.0.54',
   port: 41234
 });
 
-caster.on('message', function(message, remote) {
-  console.log(message.toString(), remote);
+server.use(caster.middleware.json());
+
+server.on('message', function(message, remote) {
+  console.log(message, remote);
 });
 
-caster.use(
-    /* receive middleware */
-    function(message, remote, next) {
-      // do something with the incoming message
-      next(null, message);
-    },
-    /* transmit middleware */
-    function(message, next) {
-      // do something with the outgoing message
-      next(null, message);
-    }
-);
-
-caster.bind(function(err) {
+server.bind(function(err) {
   if (err) {
     console.log(err);
   } else {
-    var message = new Buffer('Some bytes');
-    caster.send(message, function(err, bytes) {
+    server.send({hello: 'world'}, function(err, bytes) {
       console.log(err, bytes);
-      caster.close();
+      server.close();
     });
   }
 });
@@ -65,12 +55,8 @@ Create a new `Caster` object. `Caster` is an `EventEmitter`.
 
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
-#### caster.use(receive, transmit)
-Add receive and/or transmit middleware.
-
-`receive` is a `function(Buffer, Object.<string, *>, function(Error, Buffer))` or `null`.
-
-`transmit` is a `function(Buffer, function(Error, Buffer))` or `null`.
+#### caster.use(middleware)
+Add [middleware](#middleware).
 
 #### caster.send(message, opt_callback)
 Send a message to other multicast nodes.
@@ -100,6 +86,10 @@ Close the socket. Allows to `bind()` again with the same caster object.
 
 #### Event: 'error'
 `function(err)`
+
+### Middleware
+#### json
+Allows to use a stringify-able object instead of a `Buffer`.
 
 ### Node - a network discovery server
 
