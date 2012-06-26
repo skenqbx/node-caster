@@ -39,8 +39,8 @@ server.bind(function(err) {
 });
 ```
 
-#### create(options)
-Create a new `Caster` object. `Caster` is an `EventEmitter`.
+#### caster.create(options)
+Create a new `Caster` server. `Caster` is an `EventEmitter`.
 
 **options**
 
@@ -55,10 +55,10 @@ Create a new `Caster` object. `Caster` is an `EventEmitter`.
 
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
-#### caster.use(middleware)
+#### server.use(middleware)
 Add [middleware](#middleware).
 
-#### caster.send(message, opt_callback)
+#### server.send(message, opt_callback)
 Send a message to other multicast nodes.
 
 `message` is a `Buffer`.
@@ -66,13 +66,13 @@ Send a message to other multicast nodes.
 `opt_callback` is an optional `function(err, bytes)`.
 A possible error is emitted when no callback is set.
 
-#### caster.bind(opt_callback)
+#### server.bind(opt_callback)
 Enable the multicast udp socket.
 
 `opt_callback` is an optional `function(err)`.
 A possible error is emitted when no callback is set.
 
-#### caster.close(opt_callback)
+#### server.close(opt_callback)
 Close the socket. Allows to `bind()` again with the same caster object.
 
 `opt_callback` is an optional `function()`.
@@ -125,7 +125,7 @@ node.up(function(err) {
 });
 ```
 
-#### createNode(options)
+#### caster.createNode(options)
 Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
 **options**
