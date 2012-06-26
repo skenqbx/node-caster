@@ -70,13 +70,29 @@ describe('Caster', function() {
         socketB.send(new Buffer('test message'));
         socketC.send(new Buffer('test message'));
       });
-      after(function() {
-        socketA.removeAllListeners('message');
-        socketB.removeAllListeners('message');
-        socketC.removeAllListeners('message');
+
+      it('hash middleware', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        var middleware = caster.middleware.hash();
+        socketA.use(middleware);
+        socketB.use(middleware);
+        socketC.use(middleware);
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send(new Buffer('test message'));
+        socketB.send(new Buffer('test message'));
+        socketC.send(new Buffer('test message'));
       });
 
-      it('middleware.json', function(done) {
+      it('json middleware', function(done) {
         var count = 0;
 
         function add() {
@@ -97,7 +113,32 @@ describe('Caster', function() {
         socketC.send({hello: 'world'});
       });
 
-      after(function() {
+      it('json & hash middleware', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        var hashMiddleware = caster.middleware.hash();
+        var jsonMiddleware = caster.middleware.json();
+        socketA.use(jsonMiddleware);
+        socketA.use(hashMiddleware);
+        socketB.use(jsonMiddleware);
+        socketB.use(hashMiddleware);
+        socketC.use(jsonMiddleware);
+        socketC.use(hashMiddleware);
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send({hello: 'world'});
+        socketB.send({hello: 'world'});
+        socketC.send({hello: 'world'});
+      });
+
+      afterEach(function() {
         socketA.removeAllListeners('message');
         socketA._middleware = {};
         socketA._rx = [];

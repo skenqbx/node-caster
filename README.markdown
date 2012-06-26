@@ -42,10 +42,11 @@ server.bind(function(err) {
 #### caster.create(options)
 Create a new `Caster` server. `Caster` is an `EventEmitter`.
 
-**options**
+`opt_options` is an optional `Object`.
 
 ```javascript
-{ multicast: '224.0.0.42',
+{
+  multicast: '224.0.0.42',
   address: '0.0.0.0',
   port: null,
   loopback: true,
@@ -87,9 +88,20 @@ Close the socket. Allows to `bind()` again with the same caster object.
 #### Event: 'error'
 `function(err)`
 
-### Middleware
-#### json
-Allows to use a stringify-able object instead of a `Buffer`.
+### middleware
+#### hash(opt_options)
+Hash & verify messages.
+
+`opt_options` is an optional `Object`.
+
+```javascript
+{
+  secret: '9ve2cND;d3"Vs'
+}
+```
+
+#### json()
+Allows to use a stringify-able object instead of a `Buffer` as message.
 
 ### Node - a network discovery server
 
@@ -125,13 +137,14 @@ node.up(function(err) {
 });
 ```
 
-#### caster.createNode(options)
+#### caster.createNode(opt_options)
 Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
-**options**
+`opt_options` is an optional `Object`.
 
 ```javascript
-{ id: 'your_unique_node_id', // randomized if not set
+{
+  id: 'your_unique_node_id', // randomized if not set
   heartbeat: 1000, // heartbeat interval in ms
   timeout: 2000, // timeout until a remote node is declared down
   expose: true, // when false, no heartbeats are send
@@ -167,7 +180,8 @@ A possible error is emitted when no callback is set.
 An object with all currently seen nodes.
 
 ```javascript
-{ node857631295: {
+{
+  node857631295: {
     id: 'node857631295',
     address: '10.0.0.23',
     lastSeen: 1340351517064
