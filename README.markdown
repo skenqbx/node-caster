@@ -59,14 +59,6 @@ _Note:_ All nodes have to use the same multicast address & port to be able to co
 #### server.use(middleware)
 Add [middleware](#middleware).
 
-```javascript
-{
-  name: 'json',
-  rx: function(message, remote, next) {...},
-  tx: function(message, next) {...}
-}
-```
-
 #### server.send(message, opt_callback)
 Send a message to other multicast nodes.
 
@@ -97,6 +89,15 @@ Close the socket. Allows to `bind()` again with the same caster object.
 `function(err)`
 
 ### middleware
+
+```javascript
+{
+  name: 'json',
+  rx: function(message, remote, next) {...},
+  tx: function(message, next) {...}
+}
+```
+
 #### crypto(opt_options)
 Encrypt/decrypt messages.
 This middleware is not suitable for streaming data.
