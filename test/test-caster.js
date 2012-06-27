@@ -54,6 +54,10 @@ describe('Caster', function() {
     });
 
     describe('#onMessage()', function() {
+      var cryptoMiddleware = caster.middleware.crypto();
+      var hashMiddleware = caster.middleware.hash();
+      var jsonMiddleware = caster.middleware.json();
+
       it('binary', function(done) {
         var count = 0;
 
@@ -71,6 +75,26 @@ describe('Caster', function() {
         socketC.send(new Buffer('test message'));
       });
 
+      it('crypto middleware', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        socketA.use(cryptoMiddleware);
+        socketB.use(cryptoMiddleware);
+        socketC.use(cryptoMiddleware);
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send(new Buffer('test message'));
+        socketB.send(new Buffer('test message'));
+        socketC.send(new Buffer('test message'));
+      });
+
       it('hash middleware', function(done) {
         var count = 0;
 
@@ -80,10 +104,9 @@ describe('Caster', function() {
           }
         }
 
-        var middleware = caster.middleware.hash();
-        socketA.use(middleware);
-        socketB.use(middleware);
-        socketC.use(middleware);
+        socketA.use(hashMiddleware);
+        socketB.use(hashMiddleware);
+        socketC.use(hashMiddleware);
         socketA.on('message', add);
         socketB.on('message', add);
         socketC.on('message', add);
@@ -101,10 +124,9 @@ describe('Caster', function() {
           }
         }
 
-        var middleware = caster.middleware.json();
-        socketA.use(middleware);
-        socketB.use(middleware);
-        socketC.use(middleware);
+        socketA.use(jsonMiddleware);
+        socketB.use(jsonMiddleware);
+        socketC.use(jsonMiddleware);
         socketA.on('message', add);
         socketB.on('message', add);
         socketC.on('message', add);
@@ -113,7 +135,7 @@ describe('Caster', function() {
         socketC.send({hello: 'world'});
       });
 
-      it('json & hash middleware', function(done) {
+      it('crypto, hash & json middleware', function(done) {
         var count = 0;
 
         function add() {
@@ -122,14 +144,15 @@ describe('Caster', function() {
           }
         }
 
-        var hashMiddleware = caster.middleware.hash();
-        var jsonMiddleware = caster.middleware.json();
         socketA.use(jsonMiddleware);
         socketA.use(hashMiddleware);
+        socketA.use(cryptoMiddleware);
         socketB.use(jsonMiddleware);
         socketB.use(hashMiddleware);
+        socketB.use(cryptoMiddleware);
         socketC.use(jsonMiddleware);
         socketC.use(hashMiddleware);
+        socketC.use(cryptoMiddleware);
         socketA.on('message', add);
         socketB.on('message', add);
         socketC.on('message', add);
