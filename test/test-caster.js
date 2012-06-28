@@ -144,15 +144,9 @@ describe('Caster', function() {
           }
         }
 
-        socketA.use(jsonMiddleware);
-        socketA.use(hashMiddleware);
-        socketA.use(cryptoMiddleware);
-        socketB.use(jsonMiddleware);
-        socketB.use(hashMiddleware);
-        socketB.use(cryptoMiddleware);
-        socketC.use(jsonMiddleware);
-        socketC.use(hashMiddleware);
-        socketC.use(cryptoMiddleware);
+        socketA.use(jsonMiddleware, hashMiddleware, cryptoMiddleware);
+        socketB.use(jsonMiddleware, hashMiddleware, cryptoMiddleware);
+        socketC.use(jsonMiddleware, hashMiddleware, cryptoMiddleware);
         socketA.on('message', add);
         socketB.on('message', add);
         socketC.on('message', add);

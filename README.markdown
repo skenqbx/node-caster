@@ -9,7 +9,7 @@ _A collection of multicast servers_
 
 ### Caster - a multicast server
 
-    Stability: 2 Unstable
+    Stability: 2 - Unstable
 
 #### example
 
@@ -21,7 +21,11 @@ var server = caster.create({
   port: 41234
 });
 
-server.use(caster.middleware.json());
+server.use(
+    caster.middleware.json(),
+    caster.middleware.hash({secret: 'mySecretHashPrefix'}),
+    caster.middleware.crypto({key: 'mySecretKey'})
+);
 
 server.on('message', function(message, remote) {
   console.log(message, remote);
@@ -56,11 +60,17 @@ Create a new `Caster` server. `Caster` is an `EventEmitter`.
 
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
-#### server.use(middleware)
+#### server.use(var_middleware)
 Add [middleware](#middleware).
+The first used middleware is the first being executed on `server.send()` and the last on an incoming message. E.g. using json, hash & crypto in that order would pass messages like this:
+
+```
+incoming: crypto:rx -> hash:rx -> json:rx
+outgoing: json:tx -> hash:tx -> crypto:tx
+```
 
 #### server.send(message, opt_callback)
-Send a message to other multicast nodes.
+Send a message to all listening multicast servers.
 
 `message` is a `Buffer`.
 
@@ -93,8 +103,8 @@ Close the socket. Allows to `bind()` again with the same caster object.
 ```javascript
 {
   name: 'json',
-  rx: function(message, remote, next) {...},
-  tx: function(message, next) {...}
+  tx: function(message, next) {...},
+  rx: function(message, remote, next) {...}
 }
 ```
 
@@ -127,7 +137,7 @@ Allows to use a stringify-able object instead of a `Buffer` as message.
 
 ### Node - a network discovery server
 
-    Stability: 2 Unstable
+    Stability: 2 - Unstable
 
 #### example
 
