@@ -44,7 +44,7 @@ server.bind(function(err) {
 ```
 
 #### caster.create(options)
-Create a new `Caster` server. `Caster` is an `EventEmitter`.
+Creates a new `Caster` server. `Caster` is an `EventEmitter`.
 
 `opt_options` is an optional `Object`.
 
@@ -61,16 +61,19 @@ Create a new `Caster` server. `Caster` is an `EventEmitter`.
 _Note:_ All nodes have to use the same multicast address & port to be able to communicate.
 
 #### server.use(var_middleware)
-Add [middleware](#middleware).
-The first used middleware is the first being executed on `server.send()` and the last on an incoming message. E.g. using json, hash & crypto in that order would pass messages like this:
+Adds [middleware](#middleware).
 
+```javascript
+server.use(
+    caster.middleware.json(),
+    caster.middleware.hash(),
+    caster.middleware.crypto()
+);
 ```
-incoming: crypto:rx -> hash:rx -> json:rx
-outgoing: json:tx -> hash:tx -> crypto:tx
-```
+The middleware execution order, resulting from the above example, would be `json.tx -> hash.tx -> crypto.tx` for outgoing, and `crypto.rx -> hash.rx -> json.rx` for incoming messages.
 
 #### server.send(message, opt_callback)
-Send a message to all listening multicast servers.
+Sends a message to all listening multicast servers.
 
 `message` is a `Buffer`.
 
@@ -78,13 +81,13 @@ Send a message to all listening multicast servers.
 A possible error is emitted when no callback is set.
 
 #### server.bind(opt_callback)
-Enable the multicast udp socket.
+Enables the multicast udp socket.
 
 `opt_callback` is an optional `function(err)`.
 A possible error is emitted when no callback is set.
 
 #### server.close(opt_callback)
-Close the socket. Allows to `bind()` again with the same caster object.
+Closes the socket. Allows to `bind()` again with the same caster object.
 
 `opt_callback` is an optional `function()`.
 
@@ -93,12 +96,14 @@ Close the socket. Allows to `bind()` again with the same caster object.
 
 `message` is a `Buffer`.
 
-`remote` is an object and contains information on the remote node.
+`remote` is an object with `address` and `port`.
 
 #### Event: 'error'
 `function(err)`
 
 ### middleware
+
+An example middleware object:
 
 ```javascript
 {
@@ -108,9 +113,8 @@ Close the socket. Allows to `bind()` again with the same caster object.
 }
 ```
 
-#### crypto(opt_options)
-Encrypt/decrypt messages.
-This middleware is not suitable for streaming data.
+#### middleware.crypto(opt_options)
+Creates a new crypto middleware to encrypt outgoing & decrypt incoming messages.
 
 `opt_options` is an optional `Object`.
 
@@ -121,8 +125,8 @@ This middleware is not suitable for streaming data.
 }
 ```
 
-#### hash(opt_options)
-Hash & verify messages.
+#### middleware.hash(opt_options)
+Creates a new hash middleware to hash outgoing & verify incoming messages.
 
 `opt_options` is an optional `Object`.
 
@@ -133,8 +137,8 @@ Hash & verify messages.
 }
 ```
 
-#### json()
-Allows to use a stringify-able object instead of a `Buffer` as message.
+#### middleware.json()
+Creates a new json middleware to allow usage of a stringifyable object instead of a `Buffer` as message.
 
 ### Node - a network discovery server
 
@@ -171,7 +175,7 @@ node.up(function(err) {
 ```
 
 #### caster.createNode(opt_options)
-Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
+Creates a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
 `opt_options` is an optional `Object`.
 
@@ -191,18 +195,18 @@ Create a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 ```
 
 #### node.up(opt_callback)
-Fire up the node.
+Starts up the node.
 
 `opt_callback` is an optional `function(err)`.
 A possible error is emitted when no callback is set.
 
 #### node.down(opt_callback)
-Shut down the node.
+Shuts down the node.
 
 `opt_callback` is an optional `function()`.
 
 #### node.send(message, opt_callback)
-Send a message to other multicast nodes.
+Sends a message to other multicast nodes.
 
 `message` is a `String`, `Number` or `Object`.
 
@@ -241,7 +245,7 @@ Emitted when a remote node is _discovered_.
 `remote` is the object stored in [node.nodes](#nodenodes).
 
 #### Event: 'down'
-Emitted when a remote node _disapeared_.
+Emitted when a remote node _disappeared_.
 
 `function(remote)`
 
