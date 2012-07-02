@@ -128,7 +128,8 @@ Hash & verify messages.
 
 ```javascript
 {
-  secret: '9ve2cND;d3"Vs'
+  secret: '9ve2cND;d3"Vs',
+  algorithm: 'sha1'
 }
 ```
 
