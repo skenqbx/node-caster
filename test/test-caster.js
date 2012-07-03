@@ -135,6 +135,26 @@ describe('Caster', function() {
         socketC.send({hello: 'world'});
       });
 
+      it('json middleware (binary)', function(done) {
+        var count = 0;
+
+        function add() {
+          if (++count === 9) {
+            done();
+          }
+        }
+
+        socketA.use(jsonMiddleware);
+        socketB.use(jsonMiddleware);
+        socketC.use(jsonMiddleware);
+        socketA.on('message', add);
+        socketB.on('message', add);
+        socketC.on('message', add);
+        socketA.send(new Buffer('hello world'));
+        socketB.send(new Buffer('hello world'));
+        socketC.send(new Buffer('hello world'));
+      });
+
       it('crypto, hash & json middleware', function(done) {
         var count = 0;
 
