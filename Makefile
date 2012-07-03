@@ -1,6 +1,6 @@
 #
 # node-caster Makefile
-# @author malte.bruns@joocom.de (Malte-Thorben Bruns)
+# @author skenqbx@gmail.com (Malte-Thorben Bruns)
 #
 REPORTER ?= spec
 
