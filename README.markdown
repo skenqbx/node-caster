@@ -16,10 +16,7 @@ _A collection of multicast servers_
 ```javascript
 var caster = require('caster');
 
-var server = caster.create({
-  multicast: '224.0.0.54',
-  port: 41234
-});
+var server = caster.create();
 
 server.use(
     caster.middleware.json(),
@@ -43,7 +40,7 @@ server.bind(function(err) {
 });
 ```
 
-#### caster.create(options)
+#### caster.create(opt_options)
 Creates a new `Caster` server. `Caster` is an `EventEmitter`.
 
 `opt_options` is an optional `Object`.
@@ -52,7 +49,7 @@ Creates a new `Caster` server. `Caster` is an `EventEmitter`.
 {
   multicast: '224.0.0.42',
   address: '0.0.0.0',
-  port: null,
+  port: 10101,
   loopback: true,
   ttl: 64
 }
@@ -148,16 +145,18 @@ Creates a new json middleware to allow usage of a stringifyable object instead o
 
 ```javascript
 var node = require('caster').createNode({
-  multicast: '224.0.0.54',
-  port: 41234
+  meta: {
+    type: 'http',
+    port: 8080
+  }
 });
 
 node.on('up', function(remote) {
-  console.log('up:', remote.id);
+  console.log('node up:', remote.id, remote.meta);
 });
 
 node.on('down', function(remote) {
-  console.log('down:', remote.id);
+  console.log('node down:', remote.id, remote.meta);
 });
 
 node.on('message', function(message, remote) {
@@ -181,16 +180,24 @@ Creates a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
 ```javascript
 {
-  id: 'your_unique_node_id', // randomized if not set
+  id: null, // your node's id, randomized if not set
+  meta: null // your node's metadata, e.g. service type and port
+  expose: true, // when false, no heartbeat messages are send
   heartbeat: 1000, // heartbeat interval in ms
   timeout: 2000, // timeout until a remote node is declared down
-  expose: true, // when false, no heartbeats are send
-  // and all options of Caster
+
+  // caster options
   multicast: '224.0.0.42',
-  address: '0.0.0.0',
-  port: null, // randomized if not set
-  loopback: true,
+  port: 10101,
   ttl: 64
+
+  // caster middleware options
+  hash: true, // enable message hashing
+  hashSecret: null, // hash secret
+  hashAlgorithm: 'sha1', // hash algorithm
+  crypto: false, // enable message encryption
+  cryptoKey: null, // encryption key
+  cryptoAlgorithm: 'aes256' // encryption algorithm
 }
 ```
 
@@ -221,7 +228,9 @@ An object with all currently seen nodes.
   node857631295: {
     id: 'node857631295',
     address: '10.0.0.23',
-    lastSeen: 1340351517064
+    firstSeen: 1340351517064,
+    lastSeen: 1340351517064,
+    meta: {...}
   },
   ...
 }
