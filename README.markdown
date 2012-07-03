@@ -6,6 +6,7 @@ _A collection of multicast servers_
     npm install caster
 
 ## api
+» [Caster](#caster---a-multicast-server) » [middleware](#middleware) » [Node](#node---a-network-discovery-server)
 
 ### Caster - a multicast server
 
@@ -181,7 +182,7 @@ Creates a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 ```javascript
 {
   id: null, // your node's id, randomized if not set
-  meta: null // your node's metadata, e.g. service type and port
+  meta: null, // your node's metadata, e.g. service type and port
   expose: true, // when false, no heartbeat messages are send
   heartbeat: 1000, // heartbeat interval in ms
   timeout: 2000, // timeout until a remote node is declared down
@@ -189,7 +190,7 @@ Creates a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
   // caster options
   multicast: '224.0.0.42',
   port: 10101,
-  ttl: 64
+  ttl: 64,
 
   // caster middleware options
   hash: true, // enable message hashing
