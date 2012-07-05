@@ -1,13 +1,16 @@
 # node-caster
-_A collection of multicast servers_
+_Multicast Service Discovery_
+
+[Caster](#caster---a-multicast-server) provides a multicast server with [middleware](#middleware) support.
+[json](#middlewarejson), [hash](#middlewarehashopt_options), and [crypto](#middlewarecryptoopt_options) middleware is included.
+
+[Node](#node---a-service-discovery-server) implements service discovery on top of Caster.
 
 ## install
 
     npm install caster
 
 ## api
-» [Caster](#caster---a-multicast-server) » [middleware](#middleware) » [Node](#node---a-network-discovery-server)
-
 ### Caster - a multicast server
 
     Stability: 2 - Unstable
@@ -138,7 +141,7 @@ Creates a new hash middleware to hash outgoing & verify incoming messages.
 #### middleware.json()
 Creates a new json middleware to allow usage of a stringifyable object instead of a `Buffer` as message.
 
-### Node - a network discovery server
+### Node - a service discovery server
 
     Stability: 2 - Unstable
 
