@@ -2,7 +2,7 @@
   "name": "caster",
   "description": "Multicast Service Discovery",
   "keywords": ["multicast", "udp", "service discovery", "mdns", "middleware"],
-  "version": "0.1.1-dev",
+  "version": "0.1.1",
   "author": {
     "name": "Malte-Thorben Bruns",
     "email": "skenqbx@googlemail.com"
