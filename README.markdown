@@ -17,7 +17,7 @@ _Multicast Service Discovery_
 
 #### example
 
-```javascript
+```js
 var caster = require('caster');
 
 var server = caster.create();
@@ -49,7 +49,7 @@ Creates a new `Caster` server. `Caster` is an `EventEmitter`.
 
 `opt_options` is an optional `Object`.
 
-```javascript
+```js
 {
   multicast: '224.0.0.42',
   address: '0.0.0.0',
@@ -64,7 +64,7 @@ _Note:_ All nodes have to use the same multicast address & port to be able to co
 #### server.use(var_middleware)
 Adds [middleware](#middleware).
 
-```javascript
+```js
 server.use(
     caster.middleware.json(),
     caster.middleware.hash(),
@@ -106,7 +106,7 @@ Closes the socket. Allows to `bind()` again with the same caster object.
 
 An example middleware object:
 
-```javascript
+```js
 {
   name: 'json',
   tx: function(message, next) {...},
@@ -119,7 +119,7 @@ Creates a new crypto middleware to encrypt outgoing & decrypt incoming messages.
 
 `opt_options` is an optional `Object`.
 
-```javascript
+```js
 {
   key: '09dfDim3ZqzXvfkun6',
   algorithm: 'aes256'
@@ -131,7 +131,7 @@ Creates a new hash middleware to hash outgoing & verify incoming messages.
 
 `opt_options` is an optional `Object`.
 
-```javascript
+```js
 {
   secret: '9ve2cND;d3"Vs',
   algorithm: 'sha1'
@@ -147,7 +147,7 @@ Creates a new json middleware to allow usage of a stringifyable object instead o
 
 #### example
 
-```javascript
+```js
 var node = require('caster').createNode({
   meta: {
     type: 'http',
@@ -182,7 +182,7 @@ Creates a new `Node` object. `Node` is an `EventEmitter` and uses `Caster`.
 
 `opt_options` is an optional `Object`.
 
-```javascript
+```js
 {
   id: null, // your node's id, randomized if not set
   meta: null, // your node's metadata that is transmitted with every heartbeat
@@ -227,7 +227,7 @@ A possible error is emitted when no callback is set.
 #### node.nodes
 An object with all currently seen nodes.
 
-```javascript
+```js
 {
   node857631295: {
     id: 'node857631295',

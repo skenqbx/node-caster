@@ -58,15 +58,15 @@
   "rhino"         : false,  // Defines globals exposed when running under Rhino.
   "wsh"           : false,  // Defines globals exposed when running under WSH.
 
+  // Undocumented //////////////////////////////////////////////////////////////
+
+  "maxerr"        : 100,    // Maximum error before stopping.
+  "indent"        : 2,      // Specify indentation spacing.
+
   // Legacy ////////////////////////////////////////////////////////////////////
 
   "nomen"         : false,  // Prohibit use of initial or trailing underbars in names.
   "onevar"        : false,  // Allow only one `var` statement per function.
   "passfail"      : false,  // Stop on first error.
-  "white"         : false,  // Check against strict whitespace and indentation rules.
-
-  // Undocumented //////////////////////////////////////////////////////////////
-
-  "maxerr"        : 100,    // Maximum error before stopping.
-  "indent"        : 2       // Specify indentation spacing.
+  "white"         : false   // Check against strict whitespace and indentation rules.
 }
